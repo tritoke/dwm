@@ -99,7 +99,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_p,                     spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return,                spawn,          {.v = termcmd } },
 	{ MODKEY|ShiftMask,             XK_l,                     spawn,          {.v = screenlock } }, 
-	{ MODKEY,                       XK_Print,                 spawn,          SHCMD("maim -s | tee ~/Pictures/last_sc.png | xclip -selection clipboard -t image/png") },
+	{ MODKEY,                       XK_Print,                 spawn,          SHCMD("maim -su | tee ~/Pictures/last_sc.png | xclip -selection clipboard -t image/png") },
 	{ MODKEY|ShiftMask,             XK_Delete,                spawn,          {.v = xkill } },
 	{ MODKEY,                       XK_b,                     togglebar,      {0} },
 	{ MODKEY,                       XK_j,                     focusstack,     {.i = +1 } },
