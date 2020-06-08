@@ -41,17 +41,24 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 
-xButton2,prop | awk '
+xprop | awk '
         /^WM_CLASS/{sub(/.* =/, "instance:"); sub(/,/, "\nclass:"); print}
         /^WM_NAME/{sub(/.* =/, "title:"); print}'
 
    *
+	 * For pesky Java apps that are very rude:
+	 *   export _JAVA_AWT_WM_NONREPARENTING=1
+	 *
+	 * put this line in /etc/profile.d/jre.sh
+	 * and then source it or login again.
+	 *   - essential for Ghidra and Burpsuite
 	 */
 
 	/* class                          instance    title       tags mask     isfloating   monitor */
 	{ "firefoxdeveloperedition",      NULL,       NULL,       1 << 8,       0,           -1 },
 	{ "discord",                      NULL,       NULL,       1 << 7,       0,           -1 },
-	{ "Thunderbird",                  NULL,       NULL,       1 << 7,       0,           -1 },
+	{ "Ghidra",                       NULL,       NULL,       1 << 1,       0,           -1 },
+	{ "burp-StartBurp",               NULL,       NULL,       1 << 1,       0,           -1 },
 };
 
 /* layout(s) */
