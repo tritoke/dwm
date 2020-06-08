@@ -143,6 +143,7 @@ static const Key keys[] = {
 	TAGKEYS(                       	XK_8,                                     7)
 	TAGKEYS(                       	XK_9,                                     8)
 	{ MODKEY|ShiftMask,             XK_q,                     quit,           {0} },
+	{ MODKEY|ControlMask|ShiftMask, XK_q,                     quit,           {1} },
 	{ MODKEY|ShiftMask,             XK_s,                     spawn,          {.v = shutdown} },
 	{ MODKEY|ShiftMask,             XK_r,                     spawn,          {.v = reboot} },
 	{ 0,                            XF86XK_MonBrightnessUp,   spawn,          {.v =  brightness_up } },
