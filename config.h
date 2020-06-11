@@ -6,6 +6,7 @@
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
+static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "JetBrains Mono:size=9" };
@@ -40,12 +41,7 @@ static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
-
-xprop | awk '
-        /^WM_CLASS/{sub(/.* =/, "instance:"); sub(/,/, "\nclass:"); print}
-        /^WM_NAME/{sub(/.* =/, "title:"); print}'
-
-   *
+	 *
 	 * For pesky Java apps that are very rude:
 	 *   export _JAVA_AWT_WM_NONREPARENTING=1
 	 *
@@ -54,11 +50,13 @@ xprop | awk '
 	 *   - essential for Ghidra and Burpsuite
 	 */
 
-	/* class                          instance    title       tags mask     isfloating   monitor */
-	{ "firefoxdeveloperedition",      NULL,       NULL,       1 << 8,       0,           -1 },
-	{ "discord",                      NULL,       NULL,       1 << 7,       0,           -1 },
-	{ "Ghidra",                       NULL,       NULL,       1 << 1,       0,           -1 },
-	{ "burp-StartBurp",               NULL,       NULL,       1 << 1,       0,           -1 },
+	/* class                     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
+	{ "st",                      NULL,     NULL,           0,         0,          1,          -1,        -1 },
+	{ "firefoxdeveloperedition", NULL,     NULL,           1 << 8,    0,          0,          -1,        -1 },
+	{ "discord",                 NULL,     NULL,           1 << 7,    0,          0,           0,        -1 },
+	{ "Ghidra",                  NULL,     NULL,           1 << 1,    0,          0,           0,        -1 },
+	{ "burp-StartBurp",          NULL,     NULL,           1 << 1,    0,          0,           0,        -1 },
+	{ NULL,                      NULL,     "Event Tester", 0,         1,          0,           1,        -1 }, /* xev */
 };
 
 /* layout(s) */
