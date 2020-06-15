@@ -83,20 +83,21 @@ static const Layout layouts[] = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
-static char dmenumon[2]              = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[]        = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_base00, "-nf", col_base0D, "-sb", col_base08, "-sf", col_base0D, NULL };
-static const char *termcmd[]         = { "st", NULL };
-static const char *brightness_up[]   = { "xbacklight", "-inc", "5", NULL };
-static const char *brightness_down[] = { "xbacklight", "-dec", "5", NULL };
-static const char *volume_up[]       = { "pamixer", "--increase", "1", NULL };
-static const char *volume_down[]     = { "pamixer", "--decrease", "1", NULL };
-static const char *volume_up_big[]   = { "pamixer", "--increase", "10", NULL };
-static const char *volume_down_big[] = { "pamixer", "--decrease", "10", NULL };
-static const char *volume_mute[]     = { "pamixer", "--toggle-mute", NULL };
-static const char *shutdown[]        = { "shutdown", "now", NULL };
-static const char *reboot[]          = { "reboot", NULL };
-static const char *screenlock[]      = { "slock", NULL };
-static const char *xkill[]           = { "xkill", NULL };
+static char dmenumon[2]                = "0"; /* component of dmenucmd, manipulated in spawn() */
+static const char dmenu_highpriority[] = "discord,firefox-developer-edition,wireshark,ghidra,surf";
+static const char *dmenucmd[]          = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_base00, "-nf", col_base0D, "-sb", col_base08, "-sf", col_base0D, "-hp", dmenu_highpriority, NULL };
+static const char *termcmd[]           = { "st", NULL };
+static const char *brightness_up[]     = { "xbacklight", "-inc", "5", NULL };
+static const char *brightness_down[]   = { "xbacklight", "-dec", "5", NULL };
+static const char *volume_up[]         = { "pamixer", "--increase", "1", NULL };
+static const char *volume_down[]       = { "pamixer", "--decrease", "1", NULL };
+static const char *volume_up_big[]     = { "pamixer", "--increase", "10", NULL };
+static const char *volume_down_big[]   = { "pamixer", "--decrease", "10", NULL };
+static const char *volume_mute[]       = { "pamixer", "--toggle-mute", NULL };
+static const char *shutdown[]          = { "shutdown", "now", NULL };
+static const char *reboot[]            = { "reboot", NULL };
+static const char *screenlock[]        = { "slock", NULL };
+static const char *xkill[]             = { "xkill", NULL };
 
 #include "movestack.c"
 static Key keys[] = {
