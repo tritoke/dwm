@@ -84,7 +84,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2]                = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char dmenu_highpriority[] = "discord,firefox-developer-edition,wireshark,ghidra,surf";
+static const char dmenu_highpriority[] = "discord,firefox-developer-edition,wireshark,ghidra,google-chrome-stable,surf";
 static const char *dmenucmd[]          = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_base00, "-nf", col_base0D, "-sb", col_base08, "-sf", col_base0D, "-hp", dmenu_highpriority, NULL };
 static const char *termcmd[]           = { "st", NULL };
 static const char *brightness_up[]     = { "xbacklight", "-inc", "5", NULL };
