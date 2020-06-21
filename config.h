@@ -56,6 +56,7 @@ static const Rule rules[] = {
 	{ "discord",                 NULL,     NULL,           1 << 7,    0,          0,           0,        -1 },
 	{ "Ghidra",                  NULL,     NULL,           1 << 1,    0,          0,           0,        -1 },
 	{ "burp-StartBurp",          NULL,     NULL,           1 << 1,    0,          0,           0,        -1 },
+	{ "obs",                     NULL,     NULL,           1 << 6,    0,          0,           0,        -1 },
 	{ NULL,                      NULL,     "Event Tester", 0,         1,          0,           1,        -1 }, /* xev */
 };
 
