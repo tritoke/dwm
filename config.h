@@ -54,6 +54,7 @@ static const Rule rules[] = {
 	{ "st",                      NULL,     NULL,           0,         0,          1,          -1,        -1 },
 	{ "firefoxdeveloperedition", NULL,     NULL,           1 << 8,    0,          0,          -1,        -1 },
 	{ "discord",                 NULL,     NULL,           1 << 7,    0,          0,           0,        -1 },
+	{ "Skype",                   NULL,     NULL,           1 << 7,    0,          0,           0,        -1 },
 	{ "Ghidra",                  NULL,     NULL,           1 << 1,    0,          0,           0,        -1 },
 	{ "burp-StartBurp",          NULL,     NULL,           1 << 1,    0,          0,           0,        -1 },
 	{ "obs",                     NULL,     NULL,           1 << 6,    0,          0,           0,        -1 },
@@ -85,7 +86,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2]                = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char dmenu_highpriority[] = "discord,firefox-developer-edition,wireshark,ghidra,google-chrome-stable,surf,zoom,jitsi-meet";
+static const char dmenu_highpriority[] = "discord,firefox-developer-edition,wireshark,ghidra,google-chrome-stable,surf,zoom,jitsi-meet,skypeforlinux";
 static const char *dmenucmd[]          = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_base00, "-nf", col_base0D, "-sb", col_base08, "-sf", col_base0D, "-hp", dmenu_highpriority, NULL };
 static const char *termcmd[]           = { "st", NULL };
 static const char *brightness_up[]     = { "xbacklight", "-inc", "5", NULL };
