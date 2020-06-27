@@ -99,7 +99,6 @@ static const char *volume_down_big[]   = { "pamixer", "--decrease", "10", NULL }
 static const char *volume_mute[]       = { "pamixer", "--toggle-mute", NULL };
 static const char *shutdown[]          = { "shutdown", "now", NULL };
 static const char *reboot[]            = { "reboot", NULL };
-static const char *screenlock[]        = { "slock", NULL };
 static const char *xkill[]             = { "xkill", NULL };
 
 #include "movestack.c"
@@ -107,7 +106,6 @@ static Key keys[] = {
 	/* modifier                     key                       function        argument */
 	{ MODKEY,                       XK_p,                     spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return,                spawn,          {.v = termcmd } },
-	{ MODKEY|ShiftMask,             XK_l,                     spawn,          {.v = screenlock } }, 
 	{ MODKEY,                       XK_Print,                 spawn,          SHCMD("maim -su | tee ~/Pictures/last_sc.png | xclip -selection clipboard -t image/png") },
 	{ MODKEY|ShiftMask,             XK_Delete,                spawn,          {.v = xkill } },
 	{ MODKEY,                       XK_b,                     togglebar,      {0} },
