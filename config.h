@@ -97,6 +97,7 @@ static const char *volume_down[]       = { "pamixer", "--decrease", "1", NULL };
 static const char *volume_up_big[]     = { "pamixer", "--increase", "10", NULL };
 static const char *volume_down_big[]   = { "pamixer", "--decrease", "10", NULL };
 static const char *volume_mute[]       = { "pamixer", "--toggle-mute", NULL };
+static const char *emoji_picker[]      = { "emojipicker", NULL };
 static const char *shutdown[]          = { "shutdown", "now", NULL };
 static const char *reboot[]            = { "reboot", NULL };
 static const char *xkill[]             = { "xkill", NULL };
@@ -148,17 +149,18 @@ static Key keys[] = {
 	{ MODKEY|ControlMask|ShiftMask, XK_q,                     quit,           {1} },
 	{ MODKEY|ShiftMask,             XK_s,                     spawn,          {.v = shutdown} },
 	{ MODKEY|ShiftMask,             XK_r,                     spawn,          {.v = reboot} },
-	{ 0,                            XF86XK_MonBrightnessUp,   spawn,          {.v =  brightness_up } },
-	{ 0,                            XF86XK_MonBrightnessDown, spawn,          {.v =  brightness_down } },
-	{ 0,                            XF86XK_AudioRaiseVolume,  spawn,          {.v =  volume_up_big } },
-	{ 0,                            XF86XK_AudioLowerVolume,  spawn,          {.v =  volume_down_big } },
-	{ MODKEY,                       XF86XK_AudioRaiseVolume,  spawn,          {.v =  volume_up } },
-	{ MODKEY,                       XF86XK_AudioLowerVolume,  spawn,          {.v =  volume_down } },
-	{ ShiftMask,                    XF86XK_AudioRaiseVolume,  spawn,          {.v =  volume_up } },
-	{ ShiftMask,                    XF86XK_AudioLowerVolume,  spawn,          {.v =  volume_down } },
-	{ ControlMask,                  XF86XK_AudioRaiseVolume,  spawn,          {.v =  volume_up } },
-	{ ControlMask,                  XF86XK_AudioLowerVolume,  spawn,          {.v =  volume_down } },
-	{ 0,                            XF86XK_AudioMute,         spawn,          {.v =  volume_mute } },
+	{ MODKEY,                       XK_e,                     spawn,          {.v = emoji_picker} },
+	{ 0,                            XF86XK_MonBrightnessUp,   spawn,          {.v = brightness_up } },
+	{ 0,                            XF86XK_MonBrightnessDown, spawn,          {.v = brightness_down } },
+	{ 0,                            XF86XK_AudioRaiseVolume,  spawn,          {.v = volume_up_big } },
+	{ 0,                            XF86XK_AudioLowerVolume,  spawn,          {.v = volume_down_big } },
+	{ MODKEY,                       XF86XK_AudioRaiseVolume,  spawn,          {.v = volume_up } },
+	{ MODKEY,                       XF86XK_AudioLowerVolume,  spawn,          {.v = volume_down } },
+	{ ShiftMask,                    XF86XK_AudioRaiseVolume,  spawn,          {.v = volume_up } },
+	{ ShiftMask,                    XF86XK_AudioLowerVolume,  spawn,          {.v = volume_down } },
+	{ ControlMask,                  XF86XK_AudioRaiseVolume,  spawn,          {.v = volume_up } },
+	{ ControlMask,                  XF86XK_AudioLowerVolume,  spawn,          {.v = volume_down } },
+	{ 0,                            XF86XK_AudioMute,         spawn,          {.v = volume_mute } },
 };
 
 /* button definitions */
