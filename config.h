@@ -54,10 +54,7 @@ static const Rule rules[] = {
 	{ "st",                      NULL,     NULL,           0,         0,          1,          -1,        -1 },
 	{ "firefoxdeveloperedition", NULL,     NULL,           1 << 8,    0,          0,          -1,        -1 },
 	{ "discord",                 NULL,     NULL,           1 << 7,    0,          0,           0,        -1 },
-	{ "Skype",                   NULL,     NULL,           1 << 7,    0,          0,           0,        -1 },
-	{ "Ghidra",                  NULL,     NULL,           1 << 1,    0,          0,           0,        -1 },
-	{ "burp-StartBurp",          NULL,     NULL,           1 << 1,    0,          0,           0,        -1 },
-	{ "obs",                     NULL,     NULL,           1 << 6,    0,          0,           0,        -1 },
+	{ "Skype",                   NULL,     NULL,           1 << 6,    0,          0,           0,        -1 },
 	{ NULL,                      NULL,     "Event Tester", 0,         1,          0,           1,        -1 }, /* xev */
 };
 
@@ -171,7 +168,7 @@ static const Button buttons[] = {
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
-	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
+	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd} },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
@@ -180,4 +177,3 @@ static const Button buttons[] = {
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 };
-
