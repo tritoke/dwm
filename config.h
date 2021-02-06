@@ -87,6 +87,7 @@ static char dmenumon[2]                = "0"; /* component of dmenucmd, manipula
 static const char dmenu_highpriority[] = "spotify,discord,firefox-developer-edition,wireshark,ghidra,google-chrome-stable,surf,zoom,jitsi-meet,skypeforlinux,android-studio";
 static const char *dmenucmd[]          = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_base00, "-nf", col_base0D, "-sb", col_base08, "-sf", col_base0D, "-hp", dmenu_highpriority, NULL };
 static const char *termcmd[]           = { "st", NULL };
+static const char *termbigcmd[]           = { "st", "-f", "JetBrains Mono:size=12", NULL };
 static const char *brightness_up[]     = { "xbacklight", "-inc", "5", NULL };
 static const char *brightness_down[]   = { "xbacklight", "-dec", "5", NULL };
 static const char *volume_up[]         = { "pamixer", "--increase", "1", NULL };
@@ -104,6 +105,7 @@ static Key keys[] = {
 	/* modifier                     key                       function        argument */
 	{ MODKEY,                       XK_p,                     spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return,                spawn,          {.v = termcmd } },
+	{ MODKEY,                       XK_Return,                spawn,          {.v = termbigcmd } },
 	{ MODKEY,                       XK_Print,                 spawn,          SHCMD("maim -su | tee ~/Pictures/last_sc.png | xclip -selection clipboard -t image/png") },
 	{ MODKEY|ShiftMask,             XK_Delete,                spawn,          {.v = xkill } },
 	{ MODKEY,                       XK_b,                     togglebar,      {0} },
