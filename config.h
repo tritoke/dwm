@@ -73,6 +73,7 @@ static const Layout layouts[] = {
 
 /* key definitions */
 #define MODKEY Mod1Mask
+#define WINKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      comboview,      {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
@@ -137,6 +138,9 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_period,                tagmon,         {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_Left,                  rotatetags,     {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_Right,                 rotatetags,     {.i = +1 } },
+	// mirror windows bindings
+	{ WINKEY|ControlMask,           XK_Left,                  rotatetags,     {.i = -1 } },
+	{ WINKEY|ControlMask,           XK_Right,                 rotatetags,     {.i = +1 } },
 	TAGKEYS(                       	XK_1,                                     0)
 	TAGKEYS(                       	XK_2,                                     1)
 	TAGKEYS(                       	XK_3,                                     2)
@@ -148,8 +152,8 @@ static Key keys[] = {
 	TAGKEYS(                       	XK_9,                                     8)
 	{ MODKEY|ShiftMask,             XK_q,                     quit,           {0} },
 	{ MODKEY|ControlMask|ShiftMask, XK_q,                     quit,           {1} },
-	{ MODKEY|ShiftMask,             XK_s,                     spawn,          {.v = shutdown} },
-	{ MODKEY|ShiftMask,             XK_r,                     spawn,          {.v = reboot} },
+	{ MODKEY|ControlMask|ShiftMask, XK_s,                     spawn,          {.v = shutdown} },
+	{ MODKEY|ControlMask|ShiftMask, XK_r,                     spawn,          {.v = reboot} },
 	{ MODKEY,                       XK_e,                     spawn,          {.v = emoji_picker} },
 	{ 0,                            XF86XK_MonBrightnessUp,   spawn,          {.v = brightness_up } },
 	{ 0,                            XF86XK_MonBrightnessDown, spawn,          {.v = brightness_down } },
