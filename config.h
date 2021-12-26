@@ -89,7 +89,7 @@ static char dmenumon[2]                = "0"; /* component of dmenucmd, manipula
 static const char dmenu_highpriority[] = "spotify,discord,firefox-developer-edition,wireshark,ghidra,google-chrome-stable,surf,zoom,jitsi-meet,skypeforlinux,android-studio";
 static const char *dmenucmd[]          = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_base00, "-nf", col_base0D, "-sb", col_base08, "-sf", col_base0D, "-hp", dmenu_highpriority, NULL };
 static const char *termcmd[]           = { "st", NULL };
-static const char *termbigcmd[]           = { "st", "-f", "JetBrains Mono:size=12", NULL };
+static const char *termbigcmd[]        = { "st", "-f", "JetBrains Mono:size=12", NULL };
 static const char *brightness_up[]     = { "xbacklight", "-inc", "5", NULL };
 static const char *brightness_down[]   = { "xbacklight", "-dec", "5", NULL };
 static const char *volume_up[]         = { "pamixer", "--increase", "1", NULL };
@@ -101,6 +101,7 @@ static const char *emoji_picker[]      = { "emojipicker", NULL };
 static const char *shutdown[]          = { "shutdown", "now", NULL };
 static const char *reboot[]            = { "reboot", NULL };
 static const char *xkill[]             = { "xkill", NULL };
+static const Arg  screenshot           = SHCMD("maim -su | tee ~/Pictures/last_sc.png | xclip -selection clipboard -t image/png");
 
 #include "movestack.c"
 static const Key keys[] = {
@@ -108,7 +109,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_p,                     spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return,                spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_Return,                spawn,          {.v = termbigcmd } },
-	{ MODKEY,                       XK_Print,                 spawn,          SHCMD("maim -su | tee ~/Pictures/last_sc.png | xclip -selection clipboard -t image/png") },
+	{ MODKEY,                       XK_Print,                 spawn,          screenshot },
 	{ MODKEY|ShiftMask,             XK_Delete,                spawn,          {.v = xkill } },
 	{ MODKEY,                       XK_b,                     togglebar,      {0} },
 	{ MODKEY,                       XK_j,                     focusstack,     {.i = +1 } },
@@ -137,12 +138,9 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_period,                focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,                 tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period,                tagmon,         {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_Left,                  rotatetags,     {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_Right,                 rotatetags,     {.i = +1 } },
-	// mirror windows bindings
-	{ WINKEY|ControlMask,           XK_Left,                  rotatetags,     {.i = -1 } },
-	{ WINKEY|ControlMask,           XK_Right,                 rotatetags,     {.i = +1 } },
-	TAGKEYS(                       	XK_1,                                     0)
+	{ MODKEY|ShiftMask,             XK_h,                     rotatetags,     {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_l,                     rotatetags,     {.i = +1 } },
+	TAGKEYS(                      	XK_1,                                     0)
 	TAGKEYS(                       	XK_2,                                     1)
 	TAGKEYS(                       	XK_3,                                     2)
 	TAGKEYS(                       	XK_4,                                     3)
@@ -167,6 +165,12 @@ static const Key keys[] = {
 	{ ControlMask,                  XF86XK_AudioRaiseVolume,  spawn,          {.v = volume_up } },
 	{ ControlMask,                  XF86XK_AudioLowerVolume,  spawn,          {.v = volume_down } },
 	{ 0,                            XF86XK_AudioMute,         spawn,          {.v = volume_mute } },
+	// mirror windows bindings
+	{ WINKEY|ControlMask,           XK_Left,                  rotatetags,     {.i = -1 } },
+	{ WINKEY|ControlMask,           XK_Right,                 rotatetags,     {.i = +1 } },
+	{ WINKEY|ShiftMask,             XK_s,                     spawn,          screenshot },
+	// map both cos why not lol
+	{ MODKEY|ShiftMask,             XK_s,                     spawn,          screenshot },
 };
 
 /* button definitions */
