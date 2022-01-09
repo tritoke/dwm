@@ -108,6 +108,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_Return,                spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_Return,                spawn,          {.v = termbigcmd } },
 	{ MODKEY,                       XK_Print,                 spawn,          screenshot },
+	{ MODKEY|ShiftMask,             XK_s,                     spawn,          screenshot },
 	{ MODKEY|ShiftMask,             XK_Delete,                spawn,          {.v = xkill } },
 	{ MODKEY,                       XK_b,                     togglebar,      {0} },
 	{ MODKEY,                       XK_j,                     focusstack,     {.i = +1 } },
