@@ -84,24 +84,31 @@ static const Layout layouts[] = {
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
+// dbus commands are very long, this helps make them more readable in the config
+#define DBUS_SEND_SPOTIFY "dbus-send", "--print-reply", "--dest=org.mpris.MediaPlayer2.spotify", "/org/mpris/MediaPlayer2"
+
 /* commands */
-static char dmenumon[2]                = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char dmenu_highpriority[] = "spotify,discord,firefox-developer-edition,wireshark,ghidra,google-chrome-stable,surf,zoom,jitsi-meet,skypeforlinux,android-studio";
-static const char *dmenucmd[]          = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_base00, "-nf", col_base0D, "-sb", col_base08, "-sf", col_base0D, "-hp", dmenu_highpriority, NULL };
-static const char *termcmd[]           = { "st", NULL };
-static const char *termbigcmd[]        = { "st", "-f", "JetBrains Mono:size=12", NULL };
-static const char *brightness_up[]     = { "xbacklight", "-inc", "5", NULL };
-static const char *brightness_down[]   = { "xbacklight", "-dec", "5", NULL };
-static const char *volume_up[]         = { "pamixer", "--increase", "1", NULL };
-static const char *volume_down[]       = { "pamixer", "--decrease", "1", NULL };
-static const char *volume_up_big[]     = { "pamixer", "--increase", "10", NULL };
-static const char *volume_down_big[]   = { "pamixer", "--decrease", "10", NULL };
-static const char *volume_mute[]       = { "pamixer", "--toggle-mute", NULL };
-static const char *emoji_picker[]      = { "emojipicker", NULL };
-static const char *shutdown[]          = { "shutdown", "now", NULL };
-static const char *reboot[]            = { "reboot", NULL };
-static const char *xkill[]             = { "xkill", NULL };
-static const Arg  screenshot           = SHCMD("maim -su | tee ~/Pictures/last_sc.png | xclip -selection clipboard -t image/png");
+static char dmenumon[2]                 = "0"; /* component of dmenucmd, manipulated in spawn() */
+static const char dmenu_highpriority[]  = "spotify,discord,firefox-developer-edition,wireshark,ghidra,google-chrome-stable,zoom";
+static const char *dmenucmd[]           = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_base00, "-nf", col_base0D, "-sb", col_base08, "-sf", col_base0D, "-hp", dmenu_highpriority, NULL };
+static const char *termcmd[]            = { "st", NULL };
+static const char *termbigcmd[]         = { "st", "-f", "JetBrains Mono:size=12", NULL };
+static const char *brightness_up[]      = { "xbacklight", "-inc", "5", NULL };
+static const char *brightness_down[]    = { "xbacklight", "-dec", "5", NULL };
+static const char *volume_up[]          = { "pactl", "set-sink-volume", "0", "+1%", NULL };
+static const char *volume_down[]        = { "pactl", "set-sink-volume", "0", "-1%", NULL };
+static const char *volume_up_big[]      = { "pactl", "set-sink-volume", "0", "+10%", NULL };
+static const char *volume_down_big[]    = { "pactl", "set-sink-volume", "0", "-10%", NULL };
+static const char *volume_mute[]        = { "pactl", "set-sink-mute",   "0", "toggle", NULL };
+static const char *spotify_play_pause[] = { DBUS_SEND_SPOTIFY, "org.mpris.MediaPlayer2.Player.PlayPause", NULL };
+static const char *spotify_stop[]       = { DBUS_SEND_SPOTIFY, "org.mpris.MediaPlayer2.Player.Stop", NULL };
+static const char *spotify_next[]       = { DBUS_SEND_SPOTIFY, "org.mpris.MediaPlayer2.Player.Next", NULL };
+static const char *spotify_prev[]       = { DBUS_SEND_SPOTIFY, "org.mpris.MediaPlayer2.Player.Previous", NULL };
+static const char *emoji_picker[]       = { "emojipicker", NULL };
+static const char *shutdown[]           = { "shutdown", "now", NULL };
+static const char *reboot[]             = { "reboot", NULL };
+static const char *xkill[]              = { "xkill", NULL };
+static const Arg  screenshot            = SHCMD("maim -su | tee ~/Pictures/last_sc.png | xclip -selection clipboard -t image/png");
 
 #include "movestack.c"
 static const Key keys[] = {
@@ -166,6 +173,11 @@ static const Key keys[] = {
 	{ ControlMask,                  XF86XK_AudioRaiseVolume,  spawn,          {.v = volume_up } },
 	{ ControlMask,                  XF86XK_AudioLowerVolume,  spawn,          {.v = volume_down } },
 	{ 0,                            XF86XK_AudioMute,         spawn,          {.v = volume_mute } },
+	{ 0,                            XF86XK_AudioPlay,         spawn,          {.v = spotify_play_pause } },
+	{ 0,                            XF86XK_AudioPause,        spawn,          {.v = spotify_play_pause } },
+	{ 0,                            XF86XK_AudioStop,         spawn,          {.v = spotify_stop } },
+	{ 0,                            XF86XK_AudioNext,         spawn,          {.v = spotify_next } },
+	{ 0,                            XF86XK_AudioPrev,         spawn,          {.v = spotify_prev } },
 	// mirror windows bindings
 	{ WINKEY|ControlMask,           XK_Left,                  rotatetags,     {.i = -1 } },
 	{ WINKEY|ControlMask,           XK_Right,                 rotatetags,     {.i = +1 } },
