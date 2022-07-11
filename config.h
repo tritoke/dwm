@@ -85,6 +85,9 @@ static const Layout layouts[] = {
 
 // dbus commands are very long, this helps make them more readable in the config
 #define DBUS_SEND_SPOTIFY "dbus-send", "--print-reply", "--dest=org.mpris.MediaPlayer2.spotify", "/org/mpris/MediaPlayer2"
+#define VOLUME_SET(x) "pactl", "set-sink-volume", "@DEFAULT_SINK@", x
+#define VOLUME_UP(x) VOLUME_SET("+" #x "%")
+#define VOLUME_DOWN(x) VOLUME_SET("-" #x "%")
 
 /* commands */
 static char dmenumon[2]                 = "0"; /* component of dmenucmd, manipulated in spawn() */
@@ -94,11 +97,11 @@ static const char *termcmd[]            = { "st", NULL };
 static const char *termbigcmd[]         = { "st", "-f", "JetBrains Mono:size=12", NULL };
 static const char *brightness_up[]      = { "xbacklight", "-inc", "5", NULL };
 static const char *brightness_down[]    = { "xbacklight", "-dec", "5", NULL };
-static const char *volume_up[]          = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "+1%", NULL };
-static const char *volume_down[]        = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "-1%", NULL };
-static const char *volume_up_big[]      = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "+10%", NULL };
-static const char *volume_down_big[]    = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "-10%", NULL };
-static const char *volume_mute[]        = { "pactl", "set-sink-mute",   "@DEFAULT_SINK@", "toggle", NULL };
+static const char *volume_up[]          = { VOLUME_UP(1), NULL };
+static const char *volume_down[]        = { VOLUME_DOWN(1), NULL };
+static const char *volume_up_big[]      = { VOLUME_UP(10), NULL };
+static const char *volume_down_big[]    = { VOLUME_DOWN(10), NULL };
+static const char *volume_mute[]        = { VOLUME_SET("toggle"), NULL };
 static const char *spotify_play_pause[] = { DBUS_SEND_SPOTIFY, "org.mpris.MediaPlayer2.Player.PlayPause", NULL };
 static const char *spotify_stop[]       = { DBUS_SEND_SPOTIFY, "org.mpris.MediaPlayer2.Player.Stop", NULL };
 static const char *spotify_next[]       = { DBUS_SEND_SPOTIFY, "org.mpris.MediaPlayer2.Player.Next", NULL };
@@ -177,6 +180,9 @@ static Key keys[] = {
 	{ 0,                            XF86XK_AudioStop,         spawn,          {.v = spotify_stop } },
 	{ 0,                            XF86XK_AudioNext,         spawn,          {.v = spotify_next } },
 	{ 0,                            XF86XK_AudioPrev,         spawn,          {.v = spotify_prev } },
+	{ MODKEY | ShiftMask,           XK_bracketleft,           spawn,          {.v = spotify_prev } },
+	{ MODKEY | ShiftMask,           XK_bracketright,          spawn,          {.v = spotify_next } },
+	{ MODKEY | ShiftMask,           XK_p,                     spawn,          {.v = spotify_play_pause } },
 	// mirror windows bindings
 	{ WINKEY|ControlMask,           XK_Left,                  rotatetags,     {.i = -1 } },
 	{ WINKEY|ControlMask,           XK_Right,                 rotatetags,     {.i = +1 } },
