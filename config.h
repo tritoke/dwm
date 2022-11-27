@@ -112,6 +112,7 @@ static const char *shutdown[]           = { "shutdown", "now", NULL };
 static const char *reboot[]             = { "reboot", NULL };
 static const char *xkill[]              = { "xkill", NULL };
 static const Arg  screenshot            = SHCMD("maim -su | tee ~/Pictures/last_sc.png | xclip -selection clipboard -t image/png");
+static const char *screenshot_window[]  = { "screenshot_window", NULL };
 
 #include "movestack.c"
 static const Key keys[] = {
@@ -121,6 +122,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_Return,                spawn,          {.v = termbigcmd } },
 	{ MODKEY,                       XK_Print,                 spawn,          screenshot },
 	{ MODKEY|ShiftMask,             XK_s,                     spawn,          screenshot },
+	{ MODKEY|ShiftMask,             XK_Print,                 spawn,          {.v = screenshot_window } },
 	{ MODKEY|ShiftMask,             XK_Delete,                spawn,          {.v = xkill } },
 	{ MODKEY,                       XK_b,                     togglebar,      {0} },
 	{ MODKEY,                       XK_j,                     focusstack,     {.i = +1 } },
