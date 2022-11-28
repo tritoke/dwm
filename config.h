@@ -85,9 +85,10 @@ static const Layout layouts[] = {
 
 // dbus commands are very long, this helps make them more readable in the config
 #define DBUS_SEND_SPOTIFY "dbus-send", "--print-reply", "--dest=org.mpris.MediaPlayer2.spotify", "/org/mpris/MediaPlayer2"
-#define VOLUME_SET(x) "pactl", "set-sink-volume", "@DEFAULT_SINK@", x
-#define VOLUME_UP(x) VOLUME_SET("+" #x "%")
-#define VOLUME_DOWN(x) VOLUME_SET("-" #x "%")
+#define PACTL(cmd, x)  "pactl", cmd, "@DEFAULT_SINK@", x
+#define VOLUME_UP(x)   PACTL("set-sink-volume", "+" #x "%")
+#define VOLUME_DOWN(x) PACTL("set-sink-volume", "-" #x "%")
+#define TOGGLE_MUTE    PACTL("set-sink-mute", "toggle")
 
 /* commands */
 static char dmenumon[2]                 = "0"; /* component of dmenucmd, manipulated in spawn() */
@@ -101,7 +102,7 @@ static const char *volume_up[]          = { VOLUME_UP(1), NULL };
 static const char *volume_down[]        = { VOLUME_DOWN(1), NULL };
 static const char *volume_up_big[]      = { VOLUME_UP(10), NULL };
 static const char *volume_down_big[]    = { VOLUME_DOWN(10), NULL };
-static const char *volume_mute[]        = { VOLUME_SET("toggle"), NULL };
+static const char *volume_mute[]        = { TOGGLE_MUTE, NULL };
 static const char *spotify_play_pause[] = { DBUS_SEND_SPOTIFY, "org.mpris.MediaPlayer2.Player.PlayPause", NULL };
 static const char *spotify_stop[]       = { DBUS_SEND_SPOTIFY, "org.mpris.MediaPlayer2.Player.Stop", NULL };
 static const char *spotify_next[]       = { DBUS_SEND_SPOTIFY, "org.mpris.MediaPlayer2.Player.Next", NULL };
