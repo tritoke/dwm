@@ -98,6 +98,8 @@ static const char *termcmd[]            = { "st", NULL };
 static const char *termbigcmd[]         = { "st", "-f", "JetBrains Mono:size=12", NULL };
 static const char *brightness_up[]      = { "xbacklight", "-inc", "5", NULL };
 static const char *brightness_down[]    = { "xbacklight", "-dec", "5", NULL };
+static const Arg  bt_connect            = SHCMD("bluetoothctl power on && bluetoothctl connect F8:4E:17:8E:CA:17");
+static const char *bt_disconnect[]      = { "bluetoothctl", "disconnect", "F8:4E:17:8E:CA:17", NULL };
 static const char *volume_up[]          = { VOLUME_UP(1), NULL };
 static const char *volume_down[]        = { VOLUME_DOWN(1), NULL };
 static const char *volume_up_big[]      = { VOLUME_UP(10), NULL };
@@ -126,6 +128,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_Print,                 spawn,          {.v = screenshot_window } },
 	{ MODKEY|ShiftMask,             XK_Delete,                spawn,          {.v = xkill } },
 	{ MODKEY,                       XK_b,                     togglebar,      {0} },
+	{ MODKEY|ShiftMask,             XK_b,                     spawn,          bt_connect },
+	{ MODKEY|ShiftMask,             XK_d,                     spawn,          {.v = bt_disconnect } },
 	{ MODKEY,                       XK_j,                     focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,                     focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,                     incnmaster,     {.i = +1 } },
