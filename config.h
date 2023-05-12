@@ -114,6 +114,8 @@ static const char *shutdown[]           = { "shutdown", "now", NULL };
 static const char *reboot[]             = { "reboot", NULL };
 static const char *xkill[]              = { "xkill", NULL };
 static const Arg  screenshot            = SHCMD("maim -su | tee ~/Pictures/last_sc.png | xclip -selection clipboard -t image/png");
+static const Arg  bt_connect            = SHCMD("bluetoothctl power on && bluetoothctl connect F8:4E:17:8E:CA:17");
+static const Arg  bt_disconnect         = SHCMD("bluetoothctl disconnect F8:4E:17:8E:CA:17 && bluetoothctl power off");
 static const char *screenshot_window[]  = { "screenshot_window", NULL };
 
 #include "movestack.c"
@@ -127,10 +129,12 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_Print,                 spawn,          {.v = screenshot_window } },
 	{ MODKEY|ShiftMask,             XK_Delete,                spawn,          {.v = xkill } },
 	{ MODKEY,                       XK_b,                     togglebar,      {0} },
+	{ MODKEY|ShiftMask,             XK_b,                     spawn,          bt_connect },
 	{ MODKEY,                       XK_j,                     focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,                     focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,                     incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_d,                     incnmaster,     {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_d,                     spawn,          bt_disconnect },
 	{ MODKEY,                       XK_h,                     setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,                     setmfact,       {.f = +0.05} },
 	{ MODKEY|ShiftMask,             XK_j,                     movestack,      {.i = +1 } },
