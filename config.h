@@ -92,6 +92,7 @@ static const Layout layouts[] = {
 #define VOLUME_UP(x)   PACTL("set-sink-volume", "+" #x "%")
 #define VOLUME_DOWN(x) PACTL("set-sink-volume", "-" #x "%")
 #define TOGGLE_MUTE    PACTL("set-sink-mute", "toggle")
+#define SCRIPT_BASE    "/home/samleonard/.scripts/"
 
 /* commands */
 static char dmenumon[2]                 = "0"; /* component of dmenucmd, manipulated in spawn() */
@@ -110,15 +111,15 @@ static const char *spotify_play_pause[] = { DBUS_SEND_SPOTIFY, "org.mpris.MediaP
 static const char *spotify_stop[]       = { DBUS_SEND_SPOTIFY, "org.mpris.MediaPlayer2.Player.Stop", NULL };
 static const char *spotify_next[]       = { DBUS_SEND_SPOTIFY, "org.mpris.MediaPlayer2.Player.Next", NULL };
 static const char *spotify_prev[]       = { DBUS_SEND_SPOTIFY, "org.mpris.MediaPlayer2.Player.Previous", NULL };
-static const char *emoji_picker[]       = { "emojipicker", NULL };
-static const char *gitmoji_picker[]     = { "gitmoji_picker", NULL };
+static const char *emoji_picker[]       = { SCRIPT_BASE "emojipicker", NULL };
+static const char *gitmoji_picker[]     = { SCRIPT_BASE "gitmoji_picker", NULL };
 static const char *shutdown[]           = { "shutdown", "now", NULL };
 static const char *reboot[]             = { "reboot", NULL };
 static const char *xkill[]              = { "xkill", NULL };
 static const Arg  screenshot            = SHCMD("maim -su | tee ~/Pictures/last_sc.png | xclip -selection clipboard -t image/png");
 static const Arg  bt_connect            = SHCMD("bluetoothctl power on && bluetoothctl connect F8:4E:17:8E:CA:17");
 static const Arg  bt_disconnect         = SHCMD("bluetoothctl disconnect F8:4E:17:8E:CA:17 && bluetoothctl power off");
-static const char *screenshot_window[]  = { "screenshot_window", NULL };
+static const char *screenshot_window[]  = { SCRIPT_BASE "screenshot_window", NULL };
 
 #include "movestack.c"
 static const Key keys[] = {
