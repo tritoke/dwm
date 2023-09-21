@@ -53,10 +53,11 @@ static const Rule rules[] = {
 	/* class                     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
 	{ "st",                      NULL,     NULL,           0,         0,          1,          -1,        -1 },
 	{ "firefoxdeveloperedition", NULL,     NULL,           1 << 8,    0,          0,          -1,        -1 },
-	{ "discord",                 NULL,     NULL,           1 << 7,    0,          0,           0,        -1 },
-	{ "Spotify",                 NULL,     NULL,           1 << 6,    0,          0,           0,        -1 },
-	{ "quassel",                 NULL,     NULL,           1 << 4,    0,          0,           0,        -1 },
-	{ "thunderbird",             NULL,     NULL,           1 << 5,    0,          0,           0,        -1 },
+	{ "discord",                 NULL,     NULL,           1 << 7,    0,          0,           0,         0 },
+	{ "Spotify",                 NULL,     NULL,           1 << 6,    0,          0,           0,         0 },
+	{ "quassel",                 NULL,     NULL,           1 << 4,    0,          0,           0,         0 },
+	{ "thunderbird",             NULL,     NULL,           1 << 5,    0,          0,           0,         0 },
+	{ "TelegramDesktop",         NULL,     NULL,           1 << 0,    0,          0,           0,         1 },
 	{ NULL,                      NULL,     "Event Tester", 0,         1,          0,           1,        -1 }, /* xev */
 };
 
