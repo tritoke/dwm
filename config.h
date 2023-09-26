@@ -54,7 +54,8 @@ static const Rule rules[] = {
 	{ "st",                      NULL,     NULL,           0,         0,          1,          -1,        -1 },
 	{ "firefoxdeveloperedition", NULL,     NULL,           1 << 8,    0,          0,          -1,        -1 },
 	{ "discord",                 NULL,     NULL,           1 << 7,    0,          0,           0,         2 }, /* open on my right monitor */
-	{ "Spotify",                 NULL,     NULL,           0,         0,          0,           0,         0 }, /* open on my left monitor on my desktop */
+	{ "Spotify",                 NULL,     NULL,           1,         0,          0,           0,         0 }, /* open on my left monitor on my desktop */
+	{ "thunderbird",             NULL,     NULL,           1 << 1,    0,          0,           0,         0 }, /* open on my left monitor on my desktop */
 	{ NULL,                      NULL,     "Event Tester", 0,         1,          0,           1,        -1 }, /* xev */
 };
 
