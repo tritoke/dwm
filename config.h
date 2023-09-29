@@ -117,6 +117,10 @@ static const char *reboot[]             = { "reboot", NULL };
 static const char *xkill[]              = { "xkill", NULL };
 static const Arg  screenshot            = SHCMD("maim -su | tee ~/Pictures/last_sc.png | xclip -selection clipboard -t image/png");
 static const char *screenshot_window[]  = { "screenshot_window", NULL };
+static const Arg  bt_connect            = SHCMD("bluetoothctl power on && bluetoothctl connect F8:4E:17:8E:CA:17");
+static const Arg  bt_disconnect         = SHCMD("bluetoothctl disconnect F8:4E:17:8E:CA:17 && bluetoothctl power off");
+static const char *screenshot_window[]  = { SCRIPT_BASE "screenshot_window", NULL };
+static const char *_1password[]              = { "1password", NULL };
 
 #include "movestack.c"
 static Key keys[] = {
@@ -175,6 +179,7 @@ static Key keys[] = {
 	{ MODKEY|ControlMask|ShiftMask, XK_r,                     spawn,          {.v = reboot} },
 	{ MODKEY,                       XK_e,                     spawn,          {.v = emoji_picker} },
 	{ MODKEY,                       XK_g,                     spawn,          {.v = gitmoji_picker} },
+	{ ControlMask,                  XK_e,                     spawn,          {.v = _1password} },
 	{ 0,                            XF86XK_MonBrightnessUp,   spawn,          {.v = brightness_up } },
 	{ 0,                            XF86XK_MonBrightnessDown, spawn,          {.v = brightness_down } },
 	{ 0,                            XF86XK_AudioRaiseVolume,  spawn,          {.v = volume_up_big } },
