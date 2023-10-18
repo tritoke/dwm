@@ -116,6 +116,7 @@ static const char *emoji_picker[]       = { SCRIPT_BASE "emojipicker", NULL };
 static const char *gitmoji_picker[]     = { SCRIPT_BASE "gitmoji_picker", NULL };
 static const char *shutdown[]           = { "shutdown", "now", NULL };
 static const char *reboot[]             = { "reboot", NULL };
+static const char *slock[]              = { "slock", NULL };
 static const char *xkill[]              = { "xkill", NULL };
 static const Arg  screenshot            = SHCMD("maim -su | tee ~/Pictures/last_sc.png | xclip -selection clipboard -t image/png");
 static const Arg  bt_connect            = SHCMD("bluetoothctl power on && bluetoothctl connect F8:4E:17:8E:CA:17");
@@ -176,6 +177,7 @@ static const Key keys[] = {
 	{ MODKEY|ControlMask|ShiftMask, XK_q,                     quit,           {1} },
 	{ MODKEY|ControlMask|ShiftMask, XK_s,                     spawn,          {.v = shutdown} },
 	{ MODKEY|ControlMask|ShiftMask, XK_r,                     spawn,          {.v = reboot} },
+	{ MODKEY|ControlMask|ShiftMask, XK_l,                     spawn,          {.v = slock} },
 	{ MODKEY,                       XK_e,                     spawn,          {.v = emoji_picker} },
 	{ MODKEY,                       XK_g,                     spawn,          {.v = gitmoji_picker} },
 	{ ControlMask,                  XK_period,                spawn,          {.v = _1password} },
