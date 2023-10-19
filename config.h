@@ -84,39 +84,40 @@ static const Layout layouts[] = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 // dbus commands are very long, this helps make them more readable in the config
-#define DBUS_SEND_SPOTIFY "dbus-send", "--print-reply", "--dest=org.mpris.MediaPlayer2.spotify", "/org/mpris/MediaPlayer2"
 #define PACTL(cmd, x)  "pactl", cmd, "@DEFAULT_SINK@", x
 #define VOLUME_UP(x)   PACTL("set-sink-volume", "+" #x "%")
 #define VOLUME_DOWN(x) PACTL("set-sink-volume", "-" #x "%")
 #define TOGGLE_MUTE    PACTL("set-sink-mute", "toggle")
+#define SCRIPT_BASE    "/home/tritoke/.scripts/"
 
 /* commands */
-static char dmenumon[2]                 = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char dmenu_highpriority[]  = "spotify,discord,firefox-developer-edition,wireshark,ghidra,google-chrome-stable,zoom";
-static const char *dmenucmd[]           = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_base00, "-nf", col_base0D, "-sb", col_base08, "-sf", col_base0D, "-hb", col_base0D, "-hf", col_base00, "-hp", dmenu_highpriority, NULL };
-static const char *termcmd[]            = { "st", NULL };
-static const char *termbigcmd[]         = { "st", "-f", "JetBrains Mono:size=12", NULL };
-static const char *brightness_up[]      = { "xbacklight", "-inc", "5", NULL };
-static const char *brightness_down[]    = { "xbacklight", "-dec", "5", NULL };
-static const char *volume_up[]          = { VOLUME_UP(1), NULL };
-static const char *volume_down[]        = { VOLUME_DOWN(1), NULL };
-static const char *volume_up_big[]      = { VOLUME_UP(10), NULL };
-static const char *volume_down_big[]    = { VOLUME_DOWN(10), NULL };
-static const char *volume_mute[]        = { TOGGLE_MUTE, NULL };
-static const char *spotify_play_pause[] = { DBUS_SEND_SPOTIFY, "org.mpris.MediaPlayer2.Player.PlayPause", NULL };
-static const char *spotify_stop[]       = { DBUS_SEND_SPOTIFY, "org.mpris.MediaPlayer2.Player.Stop", NULL };
-static const char *spotify_next[]       = { DBUS_SEND_SPOTIFY, "org.mpris.MediaPlayer2.Player.Next", NULL };
-static const char *spotify_prev[]       = { DBUS_SEND_SPOTIFY, "org.mpris.MediaPlayer2.Player.Previous", NULL };
-static const char *emoji_picker[]       = { "emojipicker", NULL };
-static const char *gitmoji_picker[]     = { "gitmoji_picker", NULL };
-static const char *shutdown[]           = { "shutdown", "now", NULL };
-static const char *reboot[]             = { "reboot", NULL };
-static const char *xkill[]              = { "xkill", NULL };
-static const Arg  screenshot            = SHCMD("maim -su | tee ~/Pictures/last_sc.png | xclip -selection clipboard -t image/png");
-static const Arg  bt_connect            = SHCMD("bluetoothctl power on && bluetoothctl connect F8:4E:17:8E:CA:17");
-static const Arg  bt_disconnect         = SHCMD("bluetoothctl disconnect F8:4E:17:8E:CA:17 && bluetoothctl power off");
-static const char *screenshot_window[]  = { "screenshot_window", NULL };
-static const char *_1password[]              = { "1password", NULL };
+static char dmenumon[2]                   = "0"; /* component of dmenucmd, manipulated in spawn() */
+static const char dmenu_highpriority[]    = "spotify,discord,firefox-developer-edition,wireshark,ghidra,google-chrome-stable,zoom";
+static const char *dmenucmd[]             = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_base00, "-nf", col_base0D, "-sb", col_base08, "-sf", col_base0D, "-hb", col_base0D, "-hf", col_base00, "-hp", dmenu_highpriority, NULL };
+static const char *termcmd[]              = { "st", NULL };
+static const char *termbigcmd[]           = { "st", "-f", "JetBrains Mono:size=12", NULL };
+static const char *brightness_up[]        = { "xbacklight", "-inc", "5", NULL };
+static const char *brightness_down[]      = { "xbacklight", "-dec", "5", NULL };
+static const char *volume_up[]            = { VOLUME_UP(1), NULL };
+static const char *volume_down[]          = { VOLUME_DOWN(1), NULL };
+static const char *volume_up_big[]        = { VOLUME_UP(10), NULL };
+static const char *volume_down_big[]      = { VOLUME_DOWN(10), NULL };
+static const char *volume_mute[]          = { TOGGLE_MUTE, NULL };
+static const char *playerctl_play_pause[] = { "playerctl", "play-pause", NULL };
+static const char *playerctl_stop[]       = { "playerctl", "stop", NULL };
+static const char *playerctl_next[]       = { "playerctl", "next", NULL };
+static const char *playerctl_prev[]       = { "playerctl", "previous", NULL };
+static const char *emoji_picker[]         = { SCRIPT_BASE "emojipicker", NULL };
+static const char *gitmoji_picker[]       = { SCRIPT_BASE "gitmoji_picker", NULL };
+static const char *shutdown[]             = { "shutdown", "now", NULL };
+static const char *reboot[]               = { "reboot", NULL };
+static const char *slock[]                = { "slock", NULL };
+static const char *xkill[]                = { "xkill", NULL };
+static const Arg  screenshot              = SHCMD("maim -su | tee ~/Pictures/last_sc.png | xclip -selection clipboard -t image/png");
+static const Arg  bt_connect              = SHCMD("bluetoothctl power on && bluetoothctl connect F8:4E:17:8E:CA:17");
+static const Arg  bt_disconnect           = SHCMD("bluetoothctl disconnect F8:4E:17:8E:CA:17 && bluetoothctl power off");
+static const char *screenshot_window[]    = { SCRIPT_BASE "screenshot_window", NULL };
+static const char *_1password[]           = { "1password", NULL };
 
 #include "movestack.c"
 static Key keys[] = {
@@ -130,11 +131,11 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_Delete,                spawn,          {.v = xkill } },
 	{ MODKEY,                       XK_b,                     togglebar,      {0} },
 	{ MODKEY|ShiftMask,             XK_b,                     spawn,          bt_connect },
+	{ MODKEY|ShiftMask,             XK_d,                     spawn,          bt_disconnect },
 	{ MODKEY,                       XK_j,                     focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,                     focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,                     incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_d,                     incnmaster,     {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_d,                     spawn,          bt_disconnect },
 	{ MODKEY,                       XK_h,                     setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,                     setmfact,       {.f = +0.05} },
 	{ MODKEY|ShiftMask,             XK_j,                     movestack,      {.i = +1 } },
@@ -173,6 +174,7 @@ static Key keys[] = {
 	{ MODKEY|ControlMask|ShiftMask, XK_q,                     quit,           {1} },
 	{ MODKEY|ControlMask|ShiftMask, XK_s,                     spawn,          {.v = shutdown} },
 	{ MODKEY|ControlMask|ShiftMask, XK_r,                     spawn,          {.v = reboot} },
+	{ MODKEY|ControlMask|ShiftMask, XK_l,                     spawn,          {.v = slock} },
 	{ MODKEY,                       XK_e,                     spawn,          {.v = emoji_picker} },
 	{ MODKEY,                       XK_g,                     spawn,          {.v = gitmoji_picker} },
 	{ ControlMask,                  XK_period,                spawn,          {.v = _1password} },
@@ -187,14 +189,15 @@ static Key keys[] = {
 	{ ControlMask,                  XF86XK_AudioRaiseVolume,  spawn,          {.v = volume_up } },
 	{ ControlMask,                  XF86XK_AudioLowerVolume,  spawn,          {.v = volume_down } },
 	{ 0,                            XF86XK_AudioMute,         spawn,          {.v = volume_mute } },
-	{ 0,                            XF86XK_AudioPlay,         spawn,          {.v = spotify_play_pause } },
-	{ 0,                            XF86XK_AudioPause,        spawn,          {.v = spotify_play_pause } },
-	{ 0,                            XF86XK_AudioStop,         spawn,          {.v = spotify_stop } },
-	{ 0,                            XF86XK_AudioNext,         spawn,          {.v = spotify_next } },
-	{ 0,                            XF86XK_AudioPrev,         spawn,          {.v = spotify_prev } },
-	{ MODKEY | ShiftMask,           XK_bracketleft,           spawn,          {.v = spotify_prev } },
-	{ MODKEY | ShiftMask,           XK_bracketright,          spawn,          {.v = spotify_next } },
-	{ MODKEY | ShiftMask,           XK_p,                     spawn,          {.v = spotify_play_pause } },
+	{ MODKEY | ShiftMask,           XK_m,                     spawn,          {.v = volume_mute } },
+	{ 0,                            XF86XK_AudioPlay,         spawn,          {.v = playerctl_play_pause } },
+	{ 0,                            XF86XK_AudioPause,        spawn,          {.v = playerctl_play_pause } },
+	{ 0,                            XF86XK_AudioStop,         spawn,          {.v = playerctl_stop } },
+	{ 0,                            XF86XK_AudioNext,         spawn,          {.v = playerctl_next } },
+	{ 0,                            XF86XK_AudioPrev,         spawn,          {.v = playerctl_prev } },
+	{ MODKEY | ShiftMask,           XK_bracketleft,           spawn,          {.v = playerctl_prev } },
+	{ MODKEY | ShiftMask,           XK_bracketright,          spawn,          {.v = playerctl_next } },
+	{ MODKEY | ShiftMask,           XK_p,                     spawn,          {.v = playerctl_play_pause } },
 	// mirror windows bindings
 	{ WINKEY|ControlMask,           XK_Left,                  rotatetags,     {.i = -1 } },
 	{ WINKEY|ControlMask,           XK_Right,                 rotatetags,     {.i = +1 } },
