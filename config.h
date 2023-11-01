@@ -95,7 +95,8 @@ static const Layout layouts[] = {
 /* commands */
 static const char dmenu_highpriority[]    = "spotify,discord,firefox-developer-edition,wireshark,ghidra,google-chrome-stable,zoom";
 static const char *dmenucmd[]             = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_base00, "-nf", col_base0D, "-sb", col_base08, "-sf", col_base0D, "-hb", col_base0D, "-hf", col_base00, "-hp", dmenu_highpriority, NULL };
-static const char *termcmd[]              = { "st", NULL };
+static const char *termcmd[]              = { "kitty", NULL };
+static const char *st[]                   = { "st", NULL };
 static const char *brightness_up[]        = { "xbacklight", "-inc", "5", NULL };
 static const char *brightness_down[]      = { "xbacklight", "-dec", "5", NULL };
 static const char *volume_up[]            = { VOLUME_UP(1), NULL };
@@ -124,6 +125,7 @@ static Key keys[] = {
 	/* modifier                     key                       function        argument */
 	{ MODKEY,                       XK_p,                     spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return,                spawn,          {.v = termcmd } },
+	{ MODKEY,                       XK_Return,                spawn,          {.v = st } },
 	{ MODKEY,                       XK_Print,                 spawn,          screenshot },
 	{ MODKEY|ShiftMask,             XK_s,                     spawn,          screenshot },
 	{ MODKEY|ShiftMask,             XK_Print,                 spawn,          {.v = screenshot_window } },
