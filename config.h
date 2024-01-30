@@ -86,54 +86,56 @@ static const Layout layouts[] = {
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
-// dbus commands are very long, this helps make them more readable in the config
-#define PACTL(cmd, x)  "pactl", cmd, "@DEFAULT_SINK@", x
-#define VOLUME_UP(x)   PACTL("set-sink-volume", "+" #x "%")
-#define VOLUME_DOWN(x) PACTL("set-sink-volume", "-" #x "%")
-#define TOGGLE_MUTE    PACTL("set-sink-mute", "toggle")
-#define SCRIPT_BASE    "/home/tritoke/.scripts/"
+#define DBUS_SEND_SPOTIFY(x) { .v = (const char*[]){ "dbus-send", "--print-reply", "--dest=org.mpris.MediaPlayer2.spotify", "/org/mpris/MediaPlayer2", "org.mpris.MediaPlayer2.Player." x, NULL } }
+#define SCRIPT(x)            { .v = (const char*[]){ "/home/tritoke/.scripts/" x, NULL } }
+#define PACTL(cmd, x)        { .v = (const char*[]){ "pactl", cmd, "@DEFAULT_SINK@", x, NULL } }
+#define VOLUME_UP(x)         PACTL("set-sink-volume", "+" #x "%")
+#define VOLUME_DOWN(x)       PACTL("set-sink-volume", "-" #x "%")
+#define TOGGLE_MUTE          PACTL("set-sink-mute", "toggle")
 
 /* commands */
-static const char dmenu_highpriority[]    = "spotify,discord,firefox-developer-edition,wireshark,ghidra,google-chrome-stable,zoom";
-static const char *dmenucmd[]             = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_base00, "-nf", col_base0D, "-sb", col_base08, "-sf", col_base0D, "-hb", col_base0D, "-hf", col_base00, "-hp", dmenu_highpriority, NULL };
-static const char *termcmd[]              = { "kitty", NULL };
-static const char *st[]                   = { "st", NULL };
-static const char *brightness_up[]        = { "xbacklight", "-inc", "5", NULL };
-static const char *brightness_down[]      = { "xbacklight", "-dec", "5", NULL };
-static const char *volume_up[]            = { VOLUME_UP(1), NULL };
-static const char *volume_down[]          = { VOLUME_DOWN(1), NULL };
-static const char *volume_up_big[]        = { VOLUME_UP(10), NULL };
-static const char *volume_down_big[]      = { VOLUME_DOWN(10), NULL };
-static const char *volume_mute[]          = { TOGGLE_MUTE, NULL };
-static const char *playerctl_play_pause[] = { "playerctl", "play-pause", NULL };
-static const char *playerctl_stop[]       = { "playerctl", "stop", NULL };
-static const char *playerctl_next[]       = { "playerctl", "next", NULL };
-static const char *playerctl_prev[]       = { "playerctl", "previous", NULL };
-static const char *emoji_picker[]         = { SCRIPT_BASE "emojipicker", NULL };
-static const char *gitmoji_picker[]       = { SCRIPT_BASE "gitmoji_picker", NULL };
-static const char *shutdown[]             = { "shutdown", "now", NULL };
-static const char *reboot[]               = { "reboot", NULL };
-static const char *slock[]                = { "slock", NULL };
-static const char *xkill[]                = { "xkill", NULL };
-static const Arg  screenshot              = SHCMD("maim -su | tee ~/Pictures/last_sc.png | xclip -selection clipboard -t image/png");
-static const Arg  bt_connect              = SHCMD("bluetoothctl power on && bluetoothctl connect F8:4E:17:8E:CA:17");
-static const Arg  bt_disconnect           = SHCMD("bluetoothctl disconnect F8:4E:17:8E:CA:17 && bluetoothctl power off");
-static const char *screenshot_window[]    = { SCRIPT_BASE "screenshot_window", NULL };
-static const char *_1password[]           = { "1password", NULL };
+static const char dmenu_highpriority[]  = "spotify,discord,firefox-developer-edition,wireshark,ghidra,google-chrome-stable,zoom";
+static const char *dmenucmd[]           = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_base00, "-nf", col_base0D, "-sb", col_base08, "-sf", col_base0D, "-hb", col_base0D, "-hf", col_base00, "-hp", dmenu_highpriority, NULL };
+static const char *termcmd[]            = { "kitty", NULL };
+static const char *brightness_up[]      = { "xbacklight", "-inc", "5", NULL };
+static const char *brightness_down[]    = { "systemctl", "xbacklight", "-dec", "5", NULL };
+static const char *shutdown[]           = { "systemctl", "shutdown", "now", NULL };
+static const char *suspend[]            = { "systemctl", "suspend", NULL };
+static const char *reboot[]             = { "reboot", NULL };
+static const char *slock[]              = { "slock", NULL };
+static const char *xkill[]              = { "xkill", NULL };
+static const char *_1password[]         = { "1password", NULL };
+
+static const Arg screenshot         = SHCMD("maim -su | tee ~/Pictures/last_sc.png | xclip -selection clipboard -t image/png");
+static const Arg bt_connect         = SHCMD("bluetoothctl power on && bluetoothctl connect F8:4E:17:8E:CA:17");
+static const Arg bt_disconnect      = SHCMD("bluetoothctl disconnect F8:4E:17:8E:CA:17 && bluetoothctl power off");
+static const Arg volume_up          = VOLUME_UP(1);
+static const Arg volume_down        = VOLUME_DOWN(1);
+static const Arg volume_up_big      = VOLUME_UP(10);
+static const Arg volume_down_big    = VOLUME_DOWN(10);
+static const Arg volume_mute        = TOGGLE_MUTE;
+static const Arg spotify_play_pause = DBUS_SEND_SPOTIFY("PlayPause");
+static const Arg spotify_stop       = DBUS_SEND_SPOTIFY("Stop");
+static const Arg spotify_next       = DBUS_SEND_SPOTIFY("Next");
+static const Arg spotify_prev       = DBUS_SEND_SPOTIFY("Previous");
+static const Arg emoji_picker       = SCRIPT("emojipicker");
+static const Arg gitmoji_picker     = SCRIPT("gitmoji_picker");
+static const Arg screenshot_window  = SCRIPT("screenshot_window");
 
 #include "movestack.c"
 static Key keys[] = {
+	TAGKEYS(XK_1, 0)
+	TAGKEYS(XK_2, 1)
+	TAGKEYS(XK_3, 2)
+	TAGKEYS(XK_4, 3)
+	TAGKEYS(XK_5, 4)
+	TAGKEYS(XK_6, 5)
+	TAGKEYS(XK_7, 6)
+	TAGKEYS(XK_8, 7)
+	TAGKEYS(XK_9, 8)
+
 	/* modifier                     key                       function        argument */
-	{ MODKEY,                       XK_p,                     spawn,          {.v = dmenucmd } },
-	{ MODKEY|ShiftMask,             XK_Return,                spawn,          {.v = termcmd } },
-	{ MODKEY,                       XK_Return,                spawn,          {.v = st } },
-	{ MODKEY,                       XK_Print,                 spawn,          screenshot },
-	{ MODKEY|ShiftMask,             XK_s,                     spawn,          screenshot },
-	{ MODKEY|ShiftMask,             XK_Print,                 spawn,          {.v = screenshot_window } },
-	{ MODKEY|ShiftMask,             XK_Delete,                spawn,          {.v = xkill } },
 	{ MODKEY,                       XK_b,                     togglebar,      {0} },
-	{ MODKEY|ShiftMask,             XK_b,                     spawn,          bt_connect },
-	{ MODKEY|ShiftMask,             XK_d,                     spawn,          bt_disconnect },
 	{ MODKEY,                       XK_j,                     focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,                     focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,                     incnmaster,     {.i = +1 } },
@@ -156,56 +158,52 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_space,                 togglefloating, {0} },
 	{ MODKEY,                       XK_0,                     view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,                     tag,            {.ui = ~0 } },
-	// flipped because my monitors are clapped
 	{ MODKEY,                       XK_comma,                 focusmon,       {.i = +1 } },
 	{ MODKEY,                       XK_period,                focusmon,       {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_comma,                 tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period,                tagmon,         {.i = +1 } },
 	{ MODKEY|ControlMask,           XK_h,                     rotatetags,     {.i = -1 } },
 	{ MODKEY|ControlMask,           XK_l,                     rotatetags,     {.i = +1 } },
-	TAGKEYS(                      	XK_1,                                     0)
-	TAGKEYS(                       	XK_2,                                     1)
-	TAGKEYS(                       	XK_3,                                     2)
-	TAGKEYS(                       	XK_4,                                     3)
-	TAGKEYS(                       	XK_5,                                     4)
-	TAGKEYS(                       	XK_6,                                     5)
-	TAGKEYS(                       	XK_7,                                     6)
-	TAGKEYS(                       	XK_8,                                     7)
-	TAGKEYS(                       	XK_9,                                     8)
-	{ MODKEY|ShiftMask,             XK_q,                     quit,           {0} },
-	{ MODKEY|ControlMask|ShiftMask, XK_q,                     quit,           {1} },
-	{ MODKEY|ControlMask|ShiftMask, XK_s,                     spawn,          {.v = shutdown} },
-	{ MODKEY|ControlMask|ShiftMask, XK_r,                     spawn,          {.v = reboot} },
-	{ MODKEY|ControlMask|ShiftMask, XK_l,                     spawn,          {.v = slock} },
-	{ MODKEY,                       XK_e,                     spawn,          {.v = emoji_picker} },
-	{ MODKEY,                       XK_g,                     spawn,          {.v = gitmoji_picker} },
-	{ ControlMask,                  XK_period,                spawn,          {.v = _1password} },
-	{ 0,                            XF86XK_MonBrightnessUp,   spawn,          {.v = brightness_up } },
-	{ 0,                            XF86XK_MonBrightnessDown, spawn,          {.v = brightness_down } },
-	{ 0,                            XF86XK_AudioRaiseVolume,  spawn,          {.v = volume_up_big } },
-	{ 0,                            XF86XK_AudioLowerVolume,  spawn,          {.v = volume_down_big } },
-	{ MODKEY,                       XF86XK_AudioRaiseVolume,  spawn,          {.v = volume_up } },
-	{ MODKEY,                       XF86XK_AudioLowerVolume,  spawn,          {.v = volume_down } },
-	{ ShiftMask,                    XF86XK_AudioRaiseVolume,  spawn,          {.v = volume_up } },
-	{ ShiftMask,                    XF86XK_AudioLowerVolume,  spawn,          {.v = volume_down } },
-	{ ControlMask,                  XF86XK_AudioRaiseVolume,  spawn,          {.v = volume_up } },
-	{ ControlMask,                  XF86XK_AudioLowerVolume,  spawn,          {.v = volume_down } },
-	{ 0,                            XF86XK_AudioMute,         spawn,          {.v = volume_mute } },
-	{ MODKEY | ShiftMask,           XK_m,                     spawn,          {.v = volume_mute } },
-	{ 0,                            XF86XK_AudioPlay,         spawn,          {.v = playerctl_play_pause } },
-	{ 0,                            XF86XK_AudioPause,        spawn,          {.v = playerctl_play_pause } },
-	{ 0,                            XF86XK_AudioStop,         spawn,          {.v = playerctl_stop } },
-	{ 0,                            XF86XK_AudioNext,         spawn,          {.v = playerctl_next } },
-	{ 0,                            XF86XK_AudioPrev,         spawn,          {.v = playerctl_prev } },
-	{ MODKEY | ShiftMask,           XK_bracketleft,           spawn,          {.v = playerctl_prev } },
-	{ MODKEY | ShiftMask,           XK_bracketright,          spawn,          {.v = playerctl_next } },
-	{ MODKEY | ShiftMask,           XK_p,                     spawn,          {.v = playerctl_play_pause } },
 	// mirror windows bindings
 	{ WINKEY|ControlMask,           XK_Left,                  rotatetags,     {.i = -1 } },
 	{ WINKEY|ControlMask,           XK_Right,                 rotatetags,     {.i = +1 } },
-	{ WINKEY|ShiftMask,             XK_s,                     spawn,          screenshot },
-	// map both cos why not lol
+	{ MODKEY|ShiftMask,             XK_q,                     quit,           {0} },
+	{ MODKEY|ControlMask|ShiftMask, XK_q,                     quit,           {1} },
+	{ MODKEY,                       XK_p,                     spawn,          {.v = dmenucmd } },
+	{ MODKEY|ShiftMask,             XK_Return,                spawn,          {.v = termcmd } },
+	{ MODKEY,                       XK_Return,                spawn,          {.v = termcmd } },
+	{ MODKEY|ShiftMask,             XK_Delete,                spawn,          {.v = xkill } },
+	{ MODKEY|ControlMask|ShiftMask, XK_s,                     spawn,          {.v = shutdown} },
+	{ MODKEY|ControlMask|ShiftMask, XK_r,                     spawn,          {.v = reboot} },
+	{ MODKEY|ShiftMask,             XK_l,                     spawn,          {.v = slock } },
+	{ MODKEY|ControlMask|ShiftMask, XK_r,                     spawn,          {.v = suspend} },
+	{ ControlMask,                  XK_period,                spawn,          {.v = _1password} },
+	{ 0,                            XF86XK_MonBrightnessUp,   spawn,          {.v = brightness_up } },
+	{ 0,                            XF86XK_MonBrightnessDown, spawn,          {.v = brightness_down } },
+	{ MODKEY,                       XK_Print,                 spawn,          screenshot },
 	{ MODKEY|ShiftMask,             XK_s,                     spawn,          screenshot },
+	{ MODKEY|ShiftMask,             XK_Print,                 spawn,          screenshot_window },
+	{ MODKEY|ShiftMask,             XK_b,                     spawn,          bt_connect },
+	{ MODKEY|ShiftMask,             XK_d,                     spawn,          bt_disconnect },
+	{ MODKEY,                       XK_e,                     spawn,          emoji_picker},
+	{ MODKEY,                       XK_g,                     spawn,          gitmoji_picker},
+	{ 0,                            XF86XK_AudioRaiseVolume,  spawn,          volume_up_big },
+	{ 0,                            XF86XK_AudioLowerVolume,  spawn,          volume_down_big },
+	{ MODKEY,                       XF86XK_AudioRaiseVolume,  spawn,          volume_up },
+	{ MODKEY,                       XF86XK_AudioLowerVolume,  spawn,          volume_down },
+	{ ShiftMask,                    XF86XK_AudioRaiseVolume,  spawn,          volume_up },
+	{ ShiftMask,                    XF86XK_AudioLowerVolume,  spawn,          volume_down },
+	{ ControlMask,                  XF86XK_AudioRaiseVolume,  spawn,          volume_up },
+	{ ControlMask,                  XF86XK_AudioLowerVolume,  spawn,          volume_down },
+	{ 0,                            XF86XK_AudioMute,         spawn,          volume_mute },
+	{ 0,                            XF86XK_AudioPlay,         spawn,          spotify_play_pause },
+	{ 0,                            XF86XK_AudioPause,        spawn,          spotify_play_pause },
+	{ 0,                            XF86XK_AudioStop,         spawn,          spotify_stop },
+	{ 0,                            XF86XK_AudioNext,         spawn,          spotify_next },
+	{ 0,                            XF86XK_AudioPrev,         spawn,          spotify_prev },
+	{ MODKEY|ShiftMask,             XK_bracketleft,           spawn,          spotify_prev },
+	{ MODKEY|ShiftMask,             XK_bracketright,          spawn,          spotify_next },
+	{ MODKEY|ShiftMask,             XK_p,                     spawn,          spotify_play_pause },
 };
 
 /* button definitions */
