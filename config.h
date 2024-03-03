@@ -56,8 +56,10 @@ static const Rule rules[] = {
 	{ "kitty",                   NULL,     NULL,           0,         0,          1,          -1,        -1 },
 	{ "firefoxdeveloperedition", NULL,     NULL,           1 << 8,    0,          0,          -1,        -1 },
 	{ "discord",                 NULL,     NULL,           1 << 7,    0,          0,           0,         2 }, /* open on my right monitor */
-	{ "Spotify",                 NULL,     NULL,           1,         0,          0,           0,         0 }, /* open on my left monitor on my desktop */
-	{ "thunderbird",             NULL,     NULL,           1 << 1,    0,          0,           0,         0 }, /* open on my left monitor on my desktop */
+	{ "Spotify",                 NULL,     NULL,           1,         0,          0,           0,         0 }, /* open on my left monitor */
+	{ "TelegramDesktop",         NULL,     NULL,           1 << 1,    0,          0,           0,         0 }, /* open on my left monitor */
+	{ "quassel",                 NULL,     NULL,           1 << 2,    0,          0,           0,         0 }, /* open on my left monitor */
+	{ "thunderbird",             NULL,     NULL,           1 << 3,    0,          0,           0,         0 }, /* open on my left monitor */
 	{ NULL,                      NULL,     "Event Tester", 0,         1,          0,           1,        -1 }, /* xev */
 };
 
@@ -87,14 +89,14 @@ static const Layout layouts[] = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 #define DBUS_SEND_SPOTIFY(x) { .v = (const char*[]){ "dbus-send", "--print-reply", "--dest=org.mpris.MediaPlayer2.spotify", "/org/mpris/MediaPlayer2", "org.mpris.MediaPlayer2.Player." x, NULL } }
-#define SCRIPT(x)            { .v = (const char*[]){ "/home/tritoke/.scripts/" x, NULL } }
+#define SCRIPT(x)            { .v = (const char*[]){ "/home/samleonard/.scripts/" x, NULL } }
 #define PACTL(cmd, x)        { .v = (const char*[]){ "pactl", cmd, "@DEFAULT_SINK@", x, NULL } }
 #define VOLUME_UP(x)         PACTL("set-sink-volume", "+" #x "%")
 #define VOLUME_DOWN(x)       PACTL("set-sink-volume", "-" #x "%")
 #define TOGGLE_MUTE          PACTL("set-sink-mute", "toggle")
 
 /* commands */
-static const char dmenu_highpriority[]  = "spotify,discord,firefox-developer-edition,wireshark,ghidra,google-chrome-stable,zoom";
+static const char dmenu_highpriority[]  = "spotify,discord,firefox-developer-edition,wireshark,ghidra,google-chrome-stable,zoom,quasselclient,thunderbird,telegram-desktop";
 static const char *dmenucmd[]           = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_base00, "-nf", col_base0D, "-sb", col_base08, "-sf", col_base0D, "-hb", col_base0D, "-hf", col_base00, "-hp", dmenu_highpriority, NULL };
 static const char *termcmd[]            = { "kitty", NULL };
 static const char *brightness_up[]      = { "xbacklight", "-inc", "5", NULL };
