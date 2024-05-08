@@ -55,10 +55,9 @@ static const Rule rules[] = {
 	{ "kitty",                   NULL,     NULL,           0,         0,          1,          -1,        -1 },
 	{ "firefoxdeveloperedition", NULL,     NULL,           1 << 8,    0,          0,          -1,        -1 },
 	{ "discord",                 NULL,     NULL,           1 << 7,    0,          0,           0,         0 },
-	{ "TelegramDesktop",         NULL,     NULL,           1 << 0,    0,          0,           0,         1 },
+	{ "Spotify",                 NULL,     NULL,           1 << 0,    0,          0,           0,         1 },
 	{ "quassel",                 NULL,     NULL,           1 << 1,    0,          0,           0,         1 },
 	{ "thunderbird",             NULL,     NULL,           1 << 2,    0,          0,           0,         1 },
-	{ "Spotify",                 NULL,     NULL,           1 << 3,    0,          0,           0,         1 },
 	{ NULL,                      NULL,     "Event Tester", 0,         1,          0,           1,        -1 }, /* xev */
 };
 
