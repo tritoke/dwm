@@ -37,6 +37,12 @@ static const char *colors[][3]      = {
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
+enum {
+  MONITOR_RIGHT = 0,
+  MONITOR_LEFT = 1,
+  MONITOR_CURRENT = -1,
+};
+
 static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
@@ -51,14 +57,14 @@ static const Rule rules[] = {
 	 */
 
 	/* class                     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
-	{ "st",                      NULL,     NULL,           0,         0,          1,          -1,        -1 },
-	{ "kitty",                   NULL,     NULL,           0,         0,          1,          -1,        -1 },
-	{ "firefoxdeveloperedition", NULL,     NULL,           1 << 8,    0,          0,          -1,        -1 },
-	{ "discord",                 NULL,     NULL,           1 << 7,    0,          0,           0,         0 },
-	{ "Spotify",                 NULL,     NULL,           1 << 0,    0,          0,           0,         1 },
-	{ "quassel",                 NULL,     NULL,           1 << 1,    0,          0,           0,         1 },
-	{ "thunderbird",             NULL,     NULL,           1 << 2,    0,          0,           0,         1 },
-	{ NULL,                      NULL,     "Event Tester", 0,         1,          0,           1,        -1 }, /* xev */
+	{ "st",                      NULL,     NULL,           0,         0,          1,          -1,        MONITOR_CURRENT },
+	{ "kitty",                   NULL,     NULL,           0,         0,          1,          -1,        MONITOR_CURRENT },
+	{ "firefoxdeveloperedition", NULL,     NULL,           1 << 8,    0,          0,          -1,        MONITOR_CURRENT },
+	{ "discord",                 NULL,     NULL,           1 << 7,    0,          0,           0,        MONITOR_RIGHT   },
+	{ "Spotify",                 NULL,     NULL,           1 << 0,    0,          0,           0,        MONITOR_LEFT    },
+	{ "quassel",                 NULL,     NULL,           1 << 1,    0,          0,           0,        MONITOR_LEFT    },
+	{ "thunderbird",             NULL,     NULL,           1 << 2,    0,          0,           0,        MONITOR_LEFT    },
+	{ NULL,                      NULL,     "Event Tester", 0,         1,          0,           1,        MONITOR_CURRENT }, /* xev */
 };
 
 /* layout(s) */
