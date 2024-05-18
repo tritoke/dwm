@@ -3,14 +3,17 @@
 /* Modifer keys */
 #include <X11/XF86keysym.h>
 
+#define JETBRAINS_MONO "JetBrains Mono:size=9"
+#define BERKELEY_MONO "Berkeley Mono:size=9"
+
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "JetBrains Mono:size=9" };
-static const char dmenufont[]       = "JetBrains Mono:size=9";
+static const char *fonts[]          = { BERKELEY_MONO };
+static const char dmenufont[]       = BERKELEY_MONO;
 
 static const char col_base00[]      = "#121212"; /* darkest-grey */
 static const char col_base01[]      = "#383830"; /* dark-grey */
