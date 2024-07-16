@@ -41,8 +41,9 @@ static const char *colors[][3]      = {
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
 enum {
-  MONITOR_RIGHT = 0,
-  MONITOR_LEFT = 1,
+  MONITOR_LEFT = 0,
+  MONITOR_MIDDLE = 1,
+  MONITOR_RIGHT = 2,
   MONITOR_CURRENT = -1,
 };
 
