@@ -62,7 +62,7 @@ static const Rule rules[] = {
 	/* class                     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
 	{ "st",                      NULL,     NULL,           0,         0,          1,          -1,        MONITOR_CURRENT },
 	{ "kitty",                   NULL,     NULL,           0,         0,          1,          -1,        MONITOR_CURRENT },
-	{ "firefoxdeveloperedition", NULL,     NULL,           1 << 8,    0,          0,          -1,        MONITOR_CURRENT },
+	{ "firefoxdeveloperedition", NULL,     NULL,           1 << 8,    0,          0,          -1,        MONITOR_RIGHT   },
 	{ "discord",                 NULL,     NULL,           1 << 7,    0,          0,           0,        MONITOR_RIGHT   },
 	{ "Spotify",                 NULL,     NULL,           1 << 0,    0,          0,           0,        MONITOR_LEFT    },
 	{ "quassel",                 NULL,     NULL,           1 << 1,    0,          0,           0,        MONITOR_LEFT    },
