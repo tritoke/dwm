@@ -63,12 +63,11 @@ static const Rule rules[] = {
 	/* class                     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
 	{ "st",                      NULL,     NULL,           0,         0,          1,          -1,        MONITOR_CURRENT },
 	{ "kitty",                   NULL,     NULL,           0,         0,          1,          -1,        MONITOR_CURRENT },
-	{ "firefoxdeveloperedition", NULL,     NULL,           1 << 8,    0,          0,          -1,        MONITOR_RIGHT   },
-	{ "discord",                 NULL,     NULL,           1 << 7,    0,          0,           0,        MONITOR_RIGHT   },
-	{ "Spotify",                 NULL,     NULL,           1 << 0,    0,          0,           0,        MONITOR_LEFT    },
-	{ "quassel",                 NULL,     NULL,           1 << 1,    0,          0,           0,        MONITOR_LEFT    },
-	{ "thunderbird",             NULL,     NULL,           1 << 2,    0,          0,           0,        MONITOR_LEFT    },
-	{ NULL,                      NULL,     "Event Tester", 0,         1,          0,           1,        MONITOR_CURRENT }, /* xev */
+	{ "firefoxdeveloperedition", NULL,     NULL,           1 << 8,    0,          0,          -1,        MONITOR_CURRENT },
+	{ "discord",                 NULL,     NULL,           1 << 7,    0,          0,           0,        MONITOR_RIGHT }, /* open on my right monitor */
+	{ "Spotify",                 NULL,     NULL,           1,         0,          0,           0,        MONITOR_LEFT }, /* open on my left monitor on my desktop */
+	{ "thunderbird",             NULL,     NULL,           1 << 1,    0,          0,           0,        MONITOR_LEFT }, /* open on my left monitor on my desktop */
+	{ NULL,                      NULL,     "Event Tester", 0,         1,          0,           1,        -1 }, /* xev */
 };
 
 /* layout(s) */
@@ -98,7 +97,7 @@ static const Layout layouts[] = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 #define DBUS_SEND_SPOTIFY(x) { .v = (const char*[]){ "dbus-send", "--print-reply", "--dest=org.mpris.MediaPlayer2.spotify", "/org/mpris/MediaPlayer2", "org.mpris.MediaPlayer2.Player." x, NULL } }
-#define SCRIPT(x)            { .v = (const char*[]){ "/home/samleonard/.scripts/" x, NULL } }
+#define SCRIPT(x)            { .v = (const char*[]){ "/home/tritoke/.scripts/" x, NULL } }
 #define PACTL(cmd, x)        { .v = (const char*[]){ "pactl", cmd, "@DEFAULT_SINK@", x, NULL } }
 #define VOLUME_UP(x)         PACTL("set-sink-volume", "+" #x "%")
 #define VOLUME_DOWN(x)       PACTL("set-sink-volume", "-" #x "%")
@@ -107,12 +106,10 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2]                 = "0"; /* component of dmenucmd, manipulated in spawn() */
 
-static const char dmenu_highpriority[]  = "spotify,discord,firefox-developer-edition,wireshark,ghidra,google-chrome-stable,zoom,quasselclient,thunderbird,telegram-desktop";
+static const char dmenu_highpriority[]  = "spotify,discord,firefox-developer-edition,wireshark,ghidra,google-chrome-stable,zoom";
 static const char *dmenucmd[]           = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_base00, "-nf", col_base0D, "-sb", col_base08, "-sf", col_base0D, "-hb", col_base0D, "-hf", col_base00, "-hp", dmenu_highpriority, NULL };
 static const char *termcmd[]            = { "kitty", NULL };
 static const char *st[]                 = { "st", NULL };
-static const char *brightness_up[]      = { "light", "-s", "sysfs/backlight/intel_backlight", "-A", "5", NULL };
-static const char *brightness_down[]    = { "light", "-s", "sysfs/backlight/intel_backlight", "-U", "5", NULL };
 static const char *shutdown[]           = { "systemctl", "poweroff", NULL };
 static const char *suspend[]            = { "systemctl", "suspend", NULL };
 static const char *reboot[]             = { "systemctl", "reboot", NULL };
@@ -194,8 +191,6 @@ static const Key keys[] = {
 	{ MODKEY|ControlMask|ShiftMask, XK_l,                     spawn,          {.v = slock } },
 	{ MODKEY|ControlMask|ShiftMask, XK_u,                     spawn,          {.v = suspend} },
 	{ ControlMask,                  XK_period,                spawn,          {.v = _1password} },
-	{ 0,                            XF86XK_MonBrightnessUp,   spawn,          {.v = brightness_up } },
-	{ 0,                            XF86XK_MonBrightnessDown, spawn,          {.v = brightness_down } },
 	{ MODKEY,                       XK_Print,                 spawn,          screenshot },
 	{ MODKEY|ShiftMask,             XK_s,                     spawn,          screenshot },
 	{ MODKEY|ShiftMask,             XK_Print,                 spawn,          screenshot_window },
