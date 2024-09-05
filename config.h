@@ -40,12 +40,6 @@ static const char *colors[][3]      = {
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
-enum {
-  MONITOR_RIGHT = 0,
-  MONITOR_LEFT = 1,
-  MONITOR_CURRENT = -1,
-};
-
 static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
@@ -60,14 +54,13 @@ static const Rule rules[] = {
 	 */
 
 	/* class                     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
-	{ "st",                      NULL,     NULL,           0,         0,          1,          -1,        MONITOR_CURRENT },
-	{ "kitty",                   NULL,     NULL,           0,         0,          1,          -1,        MONITOR_CURRENT },
-	{ "firefoxdeveloperedition", NULL,     NULL,           1 << 8,    0,          0,          -1,        MONITOR_RIGHT   },
-	{ "discord",                 NULL,     NULL,           1 << 7,    0,          0,           0,        MONITOR_RIGHT   },
-	{ "Spotify",                 NULL,     NULL,           1 << 0,    0,          0,           0,        MONITOR_LEFT    },
-	{ "quassel",                 NULL,     NULL,           1 << 1,    0,          0,           0,        MONITOR_LEFT    },
-	{ "thunderbird",             NULL,     NULL,           1 << 2,    0,          0,           0,        MONITOR_LEFT    },
-	{ NULL,                      NULL,     "Event Tester", 0,         1,          0,           1,        MONITOR_CURRENT }, /* xev */
+	{ "st",                      NULL,     NULL,           0,         0,          1,          -1,        -1 },
+	{ "kitty",                   NULL,     NULL,           0,         0,          1,          -1,        -1 },
+	{ "firefoxdeveloperedition", NULL,     NULL,           1 << 8,    0,          0,          -1,        -1 },
+	{ "discord",                 NULL,     NULL,           1 << 7,    0,          0,           0,        -1 },
+	{ "Spotify",                 NULL,     NULL,           1 << 6,    0,          0,           0,        -1 },
+	{ "thunderbird",             NULL,     NULL,           1 << 5,    0,          0,           0,        -1 },
+	{ NULL,                      NULL,     "Event Tester", 0,         1,          0,           1,        -1 }, /* xev */
 };
 
 /* layout(s) */
@@ -97,7 +90,7 @@ static const Layout layouts[] = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 #define DBUS_SEND_SPOTIFY(x) { .v = (const char*[]){ "dbus-send", "--print-reply", "--dest=org.mpris.MediaPlayer2.spotify", "/org/mpris/MediaPlayer2", "org.mpris.MediaPlayer2.Player." x, NULL } }
-#define SCRIPT(x)            { .v = (const char*[]){ "/home/samleonard/.scripts/" x, NULL } }
+#define SCRIPT(x)            { .v = (const char*[]){ "/home/tritoke/.scripts/" x, NULL } }
 #define PACTL(cmd, x)        { .v = (const char*[]){ "pactl", cmd, "@DEFAULT_SINK@", x, NULL } }
 #define VOLUME_UP(x)         PACTL("set-sink-volume", "+" #x "%")
 #define VOLUME_DOWN(x)       PACTL("set-sink-volume", "-" #x "%")
@@ -110,8 +103,8 @@ static const char dmenu_highpriority[]  = "spotify,discord,firefox-developer-edi
 static const char *dmenucmd[]           = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_base00, "-nf", col_base0D, "-sb", col_base08, "-sf", col_base0D, "-hb", col_base0D, "-hf", col_base00, "-hp", dmenu_highpriority, NULL };
 static const char *termcmd[]            = { "kitty", NULL };
 static const char *st[]                 = { "st", NULL };
-static const char *brightness_up[]      = { "light", "-s", "sysfs/backlight/intel_backlight", "-A", "5", NULL };
-static const char *brightness_down[]    = { "light", "-s", "sysfs/backlight/intel_backlight", "-U", "5", NULL };
+static const char *brightness_up[]      = { "xbacklight", "-inc", "5", NULL };
+static const char *brightness_down[]    = { "xbacklight", "-dec", "5", NULL };
 static const char *shutdown[]           = { "systemctl", "poweroff", NULL };
 static const char *suspend[]            = { "systemctl", "suspend", NULL };
 static const char *reboot[]             = { "systemctl", "reboot", NULL };
