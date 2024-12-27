@@ -4,7 +4,7 @@
 #include <X11/XF86keysym.h>
 
 #define JETBRAINS_MONO "JetBrains Mono:size=9"
-#define BERKELEY_MONO "Berkeley Mono:size=9"
+#define BERKELEY_MONO "TX\\-02:size=10"
 
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
