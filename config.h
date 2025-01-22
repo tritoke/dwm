@@ -120,8 +120,8 @@ static const char *xkill[]              = { "xkill", NULL };
 static const char *_1password[]         = { "1password", NULL };
 
 static const Arg screenshot         = SHCMD("maim -su | tee ~/Pictures/last_sc.png | xclip -selection clipboard -t image/png");
-static const Arg bt_connect         = SHCMD("bluetoothctl power on && bluetoothctl connect F8:4E:17:8E:CA:17");
-static const Arg bt_disconnect      = SHCMD("bluetoothctl disconnect F8:4E:17:8E:CA:17 && bluetoothctl power off");
+static const Arg bt_connect         = SHCMD("bluetoothctl power on && (bluetoothctl connect 80:99:E7:8F:49:64 || bluetoothctl connect F8:4E:17:8E:CA:17)");
+static const Arg bt_disconnect      = SHCMD("bluetoothctl disconnect && bluetoothctl power off");
 static const Arg volume_up          = VOLUME_UP(1);
 static const Arg volume_down        = VOLUME_DOWN(1);
 static const Arg volume_up_big      = VOLUME_UP(10);
