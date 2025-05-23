@@ -41,8 +41,8 @@ static const char *colors[][3]      = {
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
 enum {
-  MONITOR_LEFT = 0,
-  MONITOR_MIDDLE = 1,
+  MONITOR_LEFT = 1,
+  MONITOR_MIDDLE = 0,
   MONITOR_RIGHT = 2,
   MONITOR_CURRENT = -1,
 };
@@ -175,8 +175,8 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_0,                     tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,                 focusmon,       {.i = +1 } },
 	{ MODKEY,                       XK_period,                focusmon,       {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_comma,                 tagmon,         {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_period,                tagmon,         {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_comma,                 tagmon,         {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_period,                tagmon,         {.i = -1 } },
 	{ MODKEY|ControlMask,           XK_h,                     rotatetags,     {.i = -1 } },
 	{ MODKEY|ControlMask,           XK_l,                     rotatetags,     {.i = +1 } },
 	// mirror windows bindings
