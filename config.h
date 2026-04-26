@@ -102,6 +102,8 @@ static const Layout layouts[] = {
 #define VOLUME_UP(x)         PACTL("set-sink-volume", "+" #x "%")
 #define VOLUME_DOWN(x)       PACTL("set-sink-volume", "-" #x "%")
 #define TOGGLE_MUTE          PACTL("set-sink-mute", "toggle")
+#define BRIGHTNESS_UP(x)     { .v = (const char*[]){ "brightctl", "--inc", #x, NULL } }
+#define BRIGHTNESS_DOWN(x)   { .v = (const char*[]){ "brightctl", "--dec", #x, NULL } }
 
 /* commands */
 static char dmenumon[2]                 = "0"; /* component of dmenucmd, manipulated in spawn() */
@@ -215,6 +217,8 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_bracketleft,           spawn,          spotify_prev },
 	{ MODKEY|ShiftMask,             XK_bracketright,          spawn,          spotify_next },
 	{ MODKEY|ShiftMask,             XK_p,                     spawn,          spotify_play_pause },
+	{ MODKEY|ShiftMask,             XK_Up,                    spawn,          BRIGHTNESS_UP(10) },
+	{ MODKEY|ShiftMask,             XK_Down,                  spawn,          BRIGHTNESS_DOWN(10) },
 };
 
 /* button definitions */
